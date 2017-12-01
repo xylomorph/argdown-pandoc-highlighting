@@ -9,7 +9,7 @@ pandoc inputfile --syntax-definition=argdown.xml --highlight-style=argdown.theme
 *Ǹotes:*
 
 + These features require a pandoc of at least version 2.0.
-+ Additionally to the two files specified by the options, the file 'language.dtd' has to be in the same directory. 
++ Additionally to the two files specified by the options, the file 'language.dtd' has to be in the same directory.
 
 ## Customised Argdown Codeblocks for Pdf- and Beamer-Output
 
@@ -35,3 +35,10 @@ innerleftmargin=10,innerrightmargin=10}
 % Highlighting-Environment of the pandoc-template)
 %\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\},fontsize=\small}
 ```
+
+
+## Credits and license
+
+The development of Argdown and Argdown-related tools is funded by the [DebateLab](http://debatelab.philosophie.kit.edu/) at KIT, Karlsruhe.
+
+All code is published under the MIT license.
