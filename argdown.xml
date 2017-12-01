@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Kate syntax highlight filter for Argdown documents.
+    Copyright 2017 Sebastian Cacean. 
+    Licensed under MIT.
+    The development of Argdown and Argdown-related tools is funded by the DebateLab (http://debatelab.philosophie.kit.edu/)
+    at KIT, Karlsruhe.
+    Based on 2008 Darrin Yeager (https://github.com/jgm/skylighting/blob/master/xml/markdown.xml)
+
+-->
+<!--
+    The [^\s]{1} is in the regex to avoid interfering with bullet list which
+    starts "* item". Thus emphasis/strong MUST be formed like *words here*
+    with the asterisks next to the beginning of the first word.
+
+    Match space or newline, followed by "*", followed by one non-space,
+    followed by anything non-asterisk, followed by "*", followed by
+    space, end-of-sentence punctuation, or the end of the line.
+-->
+<!DOCTYPE language SYSTEM "language.dtd"
+[
+<!ENTITY boldregex   "(\s|^)[\*_]{2}[^\s]{1}[^\*_]+[\*_]{2}(\s|\.|,|;|:|\-|\?|$)">
+<!ENTITY italicregex "(\s|^)[\*_]{1}[^\s]{1}[^\*_]+[\*_]{1}(\s|\.|,|;|:|\-|\?|$)">
+]>
+<language name="Argdown" version="1" kateversion="3.8" section="Markup" extensions="*.argdown" priority="3" author="Sebastian Cacean" license="MIT">
+  <highlighting>
+    <list name="keywords">
+      <item>@include</item>
+    </list>
+    <contexts>
+      <context attribute="Normal Text" lineEndContext="#stay" name="Normal Text">
+	<RegExpr attribute="comment" context="comment" String="&lt;!--" beginRegion="comment"/>
+	<keyword attribute="keyword" String="keywords" />
+	<RegExpr attribute="h1" String="^#\s.*[#]?$"/>
+        <RegExpr attribute="h2" String="^##\s.*[#]?$"/>
+        <RegExpr attribute="h3" String="^###\s.*[#]?$"/>
+        <RegExpr attribute="h4" String="^####\s.*[#]?$"/>
+        <RegExpr attribute="h5" String="^#####\s.*[#]?$"/>
+        <RegExpr attribute="h6" String="^######\s.*[#]?$"/>
+        <RegExpr attribute="italic" String="&italicregex;"/>
+        <RegExpr attribute="bold" String="&boldregex;"/>
+        <RegExpr attribute="tag" String="#(?:\([^\)]+\)|[\w-]+)[ \t]?"/>
+        <RegExpr attribute="argument-statement" String="[ \t]*\(\d+\)"/>
+        <RegExpr attribute="inference" String="(^--.*--\s*|--\s*\n.*\n--\s*$|^[\-]+\s*$)"/>
+        <RegExpr attribute="link" String="\[.+\]\(.+\)"/>
+        <RegExpr attribute="statement-mention" String="@\[.+\]"/>
+        <RegExpr attribute="statement-definition" String="\[.+\]:"/>
+        <RegExpr attribute="statement-reference" String="\[.+\]"/>
+        <RegExpr attribute="argument-mention" String="@&lt;.+&gt;"/>
+        <RegExpr attribute="argument-definition" String="&lt;.+&gt;:"/>
+        <RegExpr attribute="argument-reference" String="&lt;.+&gt;"/>
+        <RegExpr attribute="contradiction" String="[ \t]+&gt;&lt;"/>
+        <RegExpr attribute="incoming-support" String="[ \t]+\+&gt;"/>
+        <RegExpr attribute="incoming-attack" String="[ \t]+-&gt;"/>
+        <RegExpr attribute="outgoing-support" String="[ \t]+&lt;?\+\s"/>
+        <RegExpr attribute="outgoing-attack" String="[ \t]+&lt;?-\s"/>
+        <RegExpr attribute="incoming-undercut" String="[ \t]+&lt;_"/>
+        <RegExpr attribute="outgoing-undercut" String="[ \t]+_&gt;"/>
+      </context>
+
+      <context attribute="comment" lineEndContext="#stay" name="comment">
+        <RegExpr String="--&gt;" attribute="comment" context="#pop" endRegion="comment"/>
+        <RegExpr attribute="comment-italic" String="&italicregex;"/>
+        <RegExpr attribute="comment-bold" String="&boldregex;"/>
+      </context>
+    </contexts>
+
+    <itemDatas>
+      <itemData name="Normal Text" defStyleNum="dsNormal"/>
+      <itemData name="bold" defStyleNum="dsConstant"/>
+      <itemData name="italic" defStyleNum="dsFloat"/>
+      <itemData name="h1" defStyleNum="dsAnnotation"/>
+      <itemData name="h2" defStyleNum="dsAnnotation"/>
+      <itemData name="h3" defStyleNum="dsAnnotation"/>
+      <itemData name="h4" defStyleNum="dsAnnotation"/>
+      <itemData name="h5" defStyleNum="dsAnnotation"/>
+      <itemData name="h6" defStyleNum="dsAnnotation"/>
+      <itemData name="bl-emphasis" defStyleNum="dsFloat" italic="true"/>
+      <itemData name="bl-strong" defStyleNum="dsFloat" bold="true"/>
+      <itemData name="numlist" defStyleNum="dsFloat"/>
+      <itemData name="comment" defStyleNum="dsComment"/>
+      <itemData name="comment-italic" defStyleNum="dsDecVal"/>
+      <itemData name="comment-bold" defStyleNum="dsBaseN"/>
+      <!--itemData name="tag" defStyleNum="dsDocumentation"/-->
+      <itemData name="tag" defStyleNum="dsFloat"/>
+      <itemData name="inference" defStyleNum="dsWarning"/>
+      <itemData name="link" defStyleNum="dsFloat"/>
+
+      <itemData name="statement-mention" defStyleNum="dsWarning"/>
+      <itemData name="statement-definition" defStyleNum="dsWarning"/>
+      <itemData name="statement-reference" defStyleNum="dsWarning"/>
+      <itemData name="argument-mention" defStyleNum="dsAlert"/>
+      <itemData name="argument-definition" defStyleNum="dsAlert"/>
+      <itemData name="argument-reference" defStyleNum="dsAlert"/>
+      <itemData name="argument-statement" defStyleNum="dsError"/>
+      <itemData name="contradiction" defStyleNum="dsRegionMarker"/>
+      <itemData name="incoming-support" defStyleNum="dsInformation"/>
+      <itemData name="incoming-attack" defStyleNum="dsRegionMarker"/>
+      <itemData name="outgoing-support" defStyleNum="dsInformation"/>
+      <itemData name="outgoing-attack" defStyleNum="dsRegionMarker"/>
+      <itemData name="incoming-undercut" defStyleNum="dsDataType"/>
+      <itemData name="outgoing-undercut" defStyleNum="dsDataType"/>
+      <itemData name="keyword" defStyleNum="dsKeyword"/>
+    </itemDatas>
+  </highlighting>
+  <general>
+    <comments>
+      <comment name="multiLine" start="&lt;!--" end="--&gt;" region="comment"/>
+    </comments>
+  </general>
+</language>
