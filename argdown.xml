@@ -41,7 +41,7 @@
         <RegExpr attribute="bold" String="&boldregex;"/>
         <RegExpr attribute="tag" String="#(?:\([^\)]+\)|[\w-]+)[ \t]?"/>
         <RegExpr attribute="argument-statement" String="[ \t]*\(\d+\)"/>
-        <RegExpr attribute="inference" String="(^--.*--\s*|--\s*\n.*\n--\s*$|^[\-]+\s*$)"/>
+        <RegExpr attribute="inference" String="(^--.*--\s*|--\s*\n.*\n--\s*$|^----\s*$)"/>
         <RegExpr attribute="link" String="\[.+\]\(.+\)"/>
         <RegExpr attribute="statement-mention" String="@\[.+\]"/>
         <RegExpr attribute="statement-definition" String="\[.+\]:"/>
