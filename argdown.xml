@@ -16,11 +16,23 @@
     Match space or newline, followed by "*", followed by one non-space,
     followed by anything non-asterisk, followed by "*", followed by
     space, end-of-sentence punctuation, or the end of the line.
+
+    Old one:
+    <!ENTITY boldregex   "(\s|^)[\*_]{2}[^\s]{1}[^\*_]+[\*_]{2}(\s|\.|,|;|:|\-|\?|$)">
+    <!ENTITY italicregex "(\s|^)[\*_]{1}[^\s]{1}[^\*_]+[\*_]{1}(\s|\.|,|;|:|\-|\?|$)">
+    
+    But it should also match sth. like `**p**`.
+
+    Suggestion: (\s|^)[\*_]{2}[^\s\*_]{1}[^\*_]*[\*_]{2}
+    Not: (\s|^)[\*_]{2}[^\s]{1}[^\*_]*[\*_]{2} (this would also match: '*****')
+
+
+    ToDo: finalize & comit  
 -->
 <!DOCTYPE language SYSTEM "language.dtd"
 [
-<!ENTITY boldregex   "(\s|^)[\*_]{2}[^\s]{1}[^\*_]+[\*_]{2}(\s|\.|,|;|:|\-|\?|$)">
-<!ENTITY italicregex "(\s|^)[\*_]{1}[^\s]{1}[^\*_]+[\*_]{1}(\s|\.|,|;|:|\-|\?|$)">
+<!ENTITY boldregex   "(\s|^)[\*_]{2}[^\s\*_]{1}[^\*_]*[\*_]{2}(\s|\.|,|;|:|\-|\?|$)">
+<!ENTITY italicregex "(\s|^)[\*_]{1}[^\s\*_]{1}[^\*_]*[\*_]{1}(\s|\.|,|;|:|\-|\?|$)">
 ]>
 <language name="Argdown" version="1" kateversion="3.8" section="Markup" extensions="*.argdown" priority="3" author="Sebastian Cacean" license="MIT">
   <highlighting>
@@ -56,6 +68,7 @@
         <RegExpr attribute="outgoing-attack" String="[ \t]+&lt;?-\s"/>
         <RegExpr attribute="incoming-undercut" String="[ \t]+&lt;_"/>
         <RegExpr attribute="outgoing-undercut" String="[ \t]+_&gt;"/>
+	<RegExpr attribute="one-line-comment" String="\/\* .+ \*\/"/>
       </context>
 
       <context attribute="comment" lineEndContext="#stay" name="comment">
@@ -79,6 +92,7 @@
       <itemData name="bl-strong" defStyleNum="dsFloat" bold="true"/>
       <itemData name="numlist" defStyleNum="dsFloat"/>
       <itemData name="comment" defStyleNum="dsComment"/>
+      <itemData name="one-line-comment" defStyleNum="dsComment"/>
       <itemData name="comment-italic" defStyleNum="dsDecVal"/>
       <itemData name="comment-bold" defStyleNum="dsBaseN"/>
       <!--itemData name="tag" defStyleNum="dsDocumentation"/-->
