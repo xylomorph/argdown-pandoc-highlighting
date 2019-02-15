@@ -41,7 +41,7 @@
     </list>
     <contexts>
       <context attribute="Normal Text" lineEndContext="#stay" name="Normal Text">
-	<RegExpr attribute="comment" context="comment" String="&lt;!--" beginRegion="comment"/>
+	<RegExpr attribute="comment" context="comment" String="&lt;!--|\/\*" beginRegion="comment"/>
 	<keyword attribute="keyword" String="keywords" />
 	<RegExpr attribute="h1" String="^#\s.*[#]?$"/>
         <RegExpr attribute="h2" String="^##\s.*[#]?$"/>
@@ -68,11 +68,11 @@
         <RegExpr attribute="outgoing-attack" String="[ \t]+&lt;?-\s"/>
         <RegExpr attribute="incoming-undercut" String="[ \t]+&lt;_"/>
         <RegExpr attribute="outgoing-undercut" String="[ \t]+_&gt;"/>
-	<RegExpr attribute="one-line-comment" String="\/\* .+ \*\/"/>
+	<RegExpr attribute="one-line-comment" String="\/\/.*"/>
       </context>
 
       <context attribute="comment" lineEndContext="#stay" name="comment">
-        <RegExpr String="--&gt;" attribute="comment" context="#pop" endRegion="comment"/>
+        <RegExpr String="--&gt;|\*\/" attribute="comment" context="#pop" endRegion="comment"/>
         <RegExpr attribute="comment-italic" String="&italicregex;"/>
         <RegExpr attribute="comment-bold" String="&boldregex;"/>
       </context>
