@@ -9,25 +9,13 @@
 
 -->
 <!--
-    The [^\s]{1} is in the regex to avoid interfering with bullet list which
+    The [^\s]{1} in the regex for bold and italic is to avoid interfering with bullet list which
     starts "* item". Thus emphasis/strong MUST be formed like *words here*
     with the asterisks next to the beginning of the first word.
-
-    Match space or newline, followed by "*", followed by one non-space,
+    (Match space or newline, followed by "*", followed by one non-space,
     followed by anything non-asterisk, followed by "*", followed by
-    space, end-of-sentence punctuation, or the end of the line.
+    space, end-of-sentence punctuation, or the end of the line.)
 
-    Old one:
-    <!ENTITY boldregex   "(\s|^)[\*_]{2}[^\s]{1}[^\*_]+[\*_]{2}(\s|\.|,|;|:|\-|\?|$)">
-    <!ENTITY italicregex "(\s|^)[\*_]{1}[^\s]{1}[^\*_]+[\*_]{1}(\s|\.|,|;|:|\-|\?|$)">
-    
-    But it should also match sth. like `**p**`.
-
-    Suggestion: (\s|^)[\*_]{2}[^\s\*_]{1}[^\*_]*[\*_]{2}
-    Not: (\s|^)[\*_]{2}[^\s]{1}[^\*_]*[\*_]{2} (this would also match: '*****')
-
-
-    ToDo: finalize & comit  
 -->
 <!DOCTYPE language SYSTEM "language.dtd"
 [
@@ -42,6 +30,7 @@
     <contexts>
       <context attribute="Normal Text" lineEndContext="#stay" name="Normal Text">
 	<RegExpr attribute="comment" context="comment" String="&lt;!--|\/\*" beginRegion="comment"/>
+	<RegExpr attribute="inference" context="inference" String="(--|---)" beginRegion="inference"/>
 	<keyword attribute="keyword" String="keywords" />
 	<RegExpr attribute="h1" String="^#\s.*[#]?$"/>
         <RegExpr attribute="h2" String="^##\s.*[#]?$"/>
@@ -53,7 +42,6 @@
         <RegExpr attribute="bold" String="&boldregex;"/>
         <RegExpr attribute="tag" String="#(?:\([^\)]+\)|[\w-]+)[ \t]?"/>
         <RegExpr attribute="argument-statement" String="[ \t]*\(\d+\)"/>
-        <RegExpr attribute="inference" String="(^--.*--\s*|--\s*\n.*\n--\s*$|^----\s*$)"/>
         <RegExpr attribute="link" String="\[.+\]\(.+\)"/>
         <RegExpr attribute="statement-mention" String="@\[.+\]"/>
         <RegExpr attribute="statement-definition" String="\[.+\]:"/>
@@ -75,6 +63,10 @@
         <RegExpr String="--&gt;|\*\/" attribute="comment" context="#pop" endRegion="comment"/>
         <RegExpr attribute="comment-italic" String="&italicregex;"/>
         <RegExpr attribute="comment-bold" String="&boldregex;"/>
+      </context>
+      
+      <context attribute="inference" lineEndContext="#stay" name="inference">
+        <RegExpr String="(---|--)" attribute="inference" context="#pop" endRegion="inference"/>
       </context>
     </contexts>
 
