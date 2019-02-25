@@ -1,6 +1,6 @@
 # Syntax Highlighting of Argdown Codeblocks in Markdown Documents Using Pandoc
 
-The files *"argdown.xml"* and *"ardgown.theme"* can be used to highlight argdown code blocks within markdown documents via [pandoc](http://pandoc.org/). The simplest way is to use commandline options of pandoc [as described in the documentation](http://pandoc.org/MANUAL.html#syntax-highlighting), e.g.:
+The files *"argdown.xml"* and *"ardgown.theme"* can be used to highlight [argdown](http://argdown.org) code blocks within markdown documents via [pandoc](http://pandoc.org/). The simplest way is to use commandline options of pandoc [as described in the documentation](http://pandoc.org/MANUAL.html#syntax-highlighting), e.g.:
 
 ```bash
 pandoc inputfile --syntax-definition=argdown.xml --highlight-style=argdown.theme -o outputfile
